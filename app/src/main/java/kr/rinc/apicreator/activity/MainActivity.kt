@@ -23,7 +23,7 @@ class MainActivity : BaseActivity() {
         setBtnAction()
     }
 
-    fun changeEditBackground() {
+    private fun changeEditBackground() {
         idEdit.setOnFocusChangeListener { _, b ->
             if (b) {
                 idEdit.setBackgroundResource(R.drawable.button_radius_100dp_on)
@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun setBtnAction() {
+    private fun setBtnAction() {
         loginBtn.setOnClickListener {
             RetroInit.networkList.login(
                     idEdit.text.toString(),
