@@ -5,6 +5,6 @@ package kr.rinc.apicreator.model
  * This Project is APICreator
  */
 class Status {
-    val success = false
+    val success = ""
     val message = ""
 }

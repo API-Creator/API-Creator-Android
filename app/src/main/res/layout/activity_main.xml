@@ -19,11 +19,13 @@
         app:layout_constraintVertical_bias="0.195" />
 
     <EditText
+        android:id="@+id/idEdit"
         android:layout_width="280dp"
         android:layout_height="48dp"
         android:background="@drawable/button_radius_100dp_on"
         android:gravity="center"
         android:hint="아이디"
+        android:singleLine="true"
         android:textColorHint="#101015"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,11 +35,14 @@
         app:layout_constraintVertical_bias="0.578" />
 
     <EditText
+        android:id="@+id/pwEdit"
         android:layout_width="280dp"
         android:layout_height="48dp"
         android:background="@drawable/button_radius_100dp_off"
         android:gravity="center"
         android:hint="비밀번호"
+        android:singleLine="true"
+        android:textColorHint="#acacac"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -46,6 +51,7 @@
         app:layout_constraintVertical_bias="0.682" />
 
     <Button
+        android:id="@+id/loginBtn"
         android:layout_width="280dp"
         android:layout_height="48dp"
         android:background="@drawable/button_radius_100dp_bg"
