@@ -18,7 +18,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ActivityUtil.setStatusBarColor(window, "#00000000")
+        ActivityUtil.setStatusBarColor(window, "#F5F5F5")
         changeEditBackground()
         setBtnAction()
     }
