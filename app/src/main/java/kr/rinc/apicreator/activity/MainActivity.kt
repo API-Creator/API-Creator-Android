@@ -8,6 +8,7 @@ import kr.rinc.apicreator.R
 import kr.rinc.apicreator.model.Login
 import kr.rinc.apicreator.network.RetroInit
 import kr.rinc.apicreator.util.ActivityUtil
+import kr.rinc.apicreator.util.IntentUtil
 import kr.rinc.apicreator.util.ToastUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -60,6 +61,7 @@ class MainActivity : BaseActivity() {
                             if (response!!.isSuccessful) {
                                 response.body()!!.run {
                                     ToastUtil.showToast(this@MainActivity, status.message)
+                                    IntentUtil.newAct(this@MainActivity, ProjectListActivity::class.java)
                                 }
                             } else {
                                 Log.d("respoinse", response.body()!!.toString())
