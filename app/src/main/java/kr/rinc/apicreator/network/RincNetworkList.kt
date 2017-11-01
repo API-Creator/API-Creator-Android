@@ -6,7 +6,8 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-
-interface NetworkList {
-
+interface RincNetworkList {
+    @POST("/sign")
+    @FormUrlEncoded
+    fun login(@Field("id") id: String, @Field("pw") pw: String): Call<Login>
 }

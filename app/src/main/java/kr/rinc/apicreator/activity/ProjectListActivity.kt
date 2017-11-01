@@ -14,9 +14,21 @@ class ProjectListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project_list)
         setImage()
+        setBtnAction()
+    }
+
+    private fun getProjectList() {
+
     }
 
     private fun setImage() {
         GlideUtil.setGliding(this, R.drawable.logo_icon_only, logo)
+        GlideUtil.setGliding(this, R.drawable.project_create_icon, projectAddImg)
+        GlideUtil.setGliding(this, R.drawable.profile_img, profile)
+        GlideUtil.setGliding(this, R.drawable.search_icon, search)
+    }
+
+    private fun setBtnAction() {
+
     }
 }

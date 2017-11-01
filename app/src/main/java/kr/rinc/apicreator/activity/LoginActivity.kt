@@ -6,7 +6,7 @@ import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.rinc.apicreator.R
 import kr.rinc.apicreator.model.Login
-import kr.rinc.apicreator.network.RetroInit
+import kr.rinc.apicreator.network.RincRetroInit
 import kr.rinc.apicreator.util.ActivityUtil
 import kr.rinc.apicreator.util.IntentUtil
 import kr.rinc.apicreator.util.ToastUtil
@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : BaseActivity() {
+class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,23 +49,23 @@ class MainActivity : BaseActivity() {
 
     private fun setBtnAction() {
         loginBtn.setOnClickListener {
-            RetroInit.networkList.login(
+            RincRetroInit.networkList.login(
                     idEdit.text.toString(),
                     pwEdit.text.toString())
                     .enqueue(object : Callback<Login> {
                         override fun onFailure(call: Call<Login>?, t: Throwable?) {
-                            ToastUtil.showToast(this@MainActivity, "서버 오류")
+                            ToastUtil.showToast(this@LoginActivity, "서버 오류")
                         }
 
                         override fun onResponse(call: Call<Login>?, response: Response<Login>?) {
                             if (response!!.isSuccessful) {
                                 response.body()!!.run {
-                                    ToastUtil.showToast(this@MainActivity, status.message)
-                                    IntentUtil.newAct(this@MainActivity, ProjectListActivity::class.java)
+                                    ToastUtil.showToast(this@LoginActivity, status.message)
+                                    IntentUtil.newAct(this@LoginActivity, ProjectListActivity::class.java)
                                 }
                             } else {
                                 Log.d("respoinse", response.body()!!.toString())
-                                ToastUtil.showToast(this@MainActivity, "클라이언트 오류")
+                                ToastUtil.showToast(this@LoginActivity, "클라이언트 오류")
                             }
                         }
 
