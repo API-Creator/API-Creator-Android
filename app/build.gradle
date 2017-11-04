@@ -42,5 +42,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     implementation 'jp.wasabeef:glide-transformations:3.0.1'
+//    implementation 'geniusk.utilslib:ToastUtil:1.0.0@aar'
 }
 

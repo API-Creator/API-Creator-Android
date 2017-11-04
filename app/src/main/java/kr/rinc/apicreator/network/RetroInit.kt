@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @SuppressLint("StaticFieldLeak")
 object RetroInit {
     val networkList: NetworkList
-    private val SERVER_URL: String = "http://rinc.kr:7002"
+    private val SERVER_URL: String = "http://api.rinc.kr"
 
     init {
         val retrofit = Retrofit.Builder()
