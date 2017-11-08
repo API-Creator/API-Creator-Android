@@ -17,64 +17,68 @@ import retrofit2.Response
 
 class LoginActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        ActivityUtil.setStatusBarColor(window, "#F5F5F5")
-        changeEditBackground()
-        setBtnAction()
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+    ActivityUtil.setStatusBarColor(window, "#F5F5F5")
+    changeEditBackground()
+    setBtnAction()
+  }
 
-    private fun changeEditBackground() {
-        idEdit.setOnFocusChangeListener { _, b ->
-            if (b) {
-                idEdit.setBackgroundResource(R.drawable.button_radius_100dp_on)
-                idEdit.setHintTextColor(Color.parseColor("#101015"))
-                idEdit.setTextColor(Color.parseColor("#101015"))
-                pwEdit.setBackgroundResource(R.drawable.button_radius_100dp_off)
-                pwEdit.setHintTextColor(Color.parseColor("#acacac"))
-                pwEdit.setTextColor(Color.parseColor("#acacac"))
+  private fun changeEditBackground() {
+    idEdit.setOnFocusChangeListener { _, b ->
+      if (b) {
+        idEdit.setBackgroundResource(R.drawable.button_radius_100dp_on)
+        idEdit.setHintTextColor(Color.parseColor("#101015"))
+        idEdit.setTextColor(Color.parseColor("#101015"))
+        pwEdit.setBackgroundResource(R.drawable.button_radius_100dp_off)
+        pwEdit.setHintTextColor(Color.parseColor("#acacac"))
+        pwEdit.setTextColor(Color.parseColor("#acacac"))
+      }
+    }
+    pwEdit.setOnFocusChangeListener { _, b ->
+      if (b) {
+        idEdit.setBackgroundResource(R.drawable.button_radius_100dp_off)
+        idEdit.setHintTextColor(Color.parseColor("#acacac"))
+        idEdit.setTextColor(Color.parseColor("#acacac"))
+        pwEdit.setBackgroundResource(R.drawable.button_radius_100dp_on)
+        pwEdit.setHintTextColor(Color.parseColor("#101015"))
+        pwEdit.setTextColor(Color.parseColor("#101015"))
+      }
+    }
+  }
+
+  private fun setBtnAction() {
+    loginBtn.setOnClickListener {
+      RincRetroInit.networkList.login(
+          idEdit.text.toString(),
+          pwEdit.text.toString())
+          .enqueue(object : Callback<Login> {
+            override fun onFailure(call: Call<Login>?, t: Throwable?) {
+              ToastUtil.showToast(this@LoginActivity, "서버 오류")
             }
-        }
-        pwEdit.setOnFocusChangeListener { _, b ->
-            if (b) {
-                idEdit.setBackgroundResource(R.drawable.button_radius_100dp_off)
-                idEdit.setHintTextColor(Color.parseColor("#acacac"))
-                idEdit.setTextColor(Color.parseColor("#acacac"))
-                pwEdit.setBackgroundResource(R.drawable.button_radius_100dp_on)
-                pwEdit.setHintTextColor(Color.parseColor("#101015"))
-                pwEdit.setTextColor(Color.parseColor("#101015"))
+
+            override fun onResponse(call: Call<Login>?, response: Response<Login>?) {
+              if (response!!.isSuccessful) {
+                response.body()!!.run {
+                  ToastUtil.showToast(this@LoginActivity, status.message)
+                  if (status.success === "true") {
+                    SharedUtil.setToken(this@LoginActivity, token)
+                    IntentUtil.newAct(this@LoginActivity, ProjectListActivity::class.java)
+                  }
+                  else {
+                    SharedUtil.setToken(this@LoginActivity, token)
+                    IntentUtil.newAct(this@LoginActivity, ProjectListActivity::class.java)
+                  }
+                }
+              } else {
+                Log.d("respoinse", response.body()!!.toString())
+                ToastUtil.showToast(this@LoginActivity, "클라이언트 오류")
+              }
             }
-        }
+
+          })
     }
-
-    private fun setBtnAction() {
-        loginBtn.setOnClickListener {
-            RincRetroInit.networkList.login(
-                    idEdit.text.toString(),
-                    pwEdit.text.toString())
-                    .enqueue(object : Callback<Login> {
-                        override fun onFailure(call: Call<Login>?, t: Throwable?) {
-                            ToastUtil.showToast(this@LoginActivity, "서버 오류")
-                        }
-
-                        override fun onResponse(call: Call<Login>?, response: Response<Login>?) {
-                            if (response!!.isSuccessful) {
-                                response.body()!!.run {
-                                    ToastUtil.showToast(this@LoginActivity, status.message)
-                                    if (status.success === "true") {
-                                        SharedUtil.setToken(this@LoginActivity, token)
-                                        IntentUtil.newAct(this@LoginActivity, ProjectListActivity::class.java)
-                                    }
-                                }
-                            } else {
-                                Log.d("respoinse", response.body()!!.toString())
-                                ToastUtil.showToast(this@LoginActivity, "클라이언트 오류")
-                            }
-                        }
-
-                    })
-        }
-    }
+  }
 
 }

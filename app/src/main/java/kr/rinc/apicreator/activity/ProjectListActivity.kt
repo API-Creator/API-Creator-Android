@@ -3,10 +3,12 @@ package kr.rinc.apicreator.activity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_project_list.*
 import kr.rinc.apicreator.R
 import kr.rinc.apicreator.adapter.ProjectListAdapter
 import kr.rinc.apicreator.model.getProject
+import kr.rinc.apicreator.model.getProjectObj
 import kr.rinc.apicreator.network.RetroInit
 import kr.rinc.apicreator.util.GlideUtil
 import kr.rinc.apicreator.util.SharedUtil
@@ -20,47 +22,52 @@ import retrofit2.Response
  * This Project is APICreator
  */
 class ProjectListActivity : BaseActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_project_list)
-        setImage()
-        setBtnAction()
-        getProjectList()
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_project_list)
+    setImage()
+    setBtnAction()
+    getProjectList()
+    projectAddImg.setOnClickListener {
+      getProjectList()
     }
+  }
 
-    private fun getProjectList() {
-        RetroInit.networkList.getProjects(SharedUtil.getToken(this@ProjectListActivity)).enqueue(object : Callback<List<getProject>> {
-            override fun onResponse(call: Call<List<getProject>>?, response: Response<List<getProject>>?) {
-                if (response!!.isSuccessful) {
-                    ToastUtil.showToast(this@ProjectListActivity, "Success!")
-                    response.body().run {
-                        Log.d("list response", title.toString())
-                        val layoutManager = GridLayoutManager(this@ProjectListActivity, 1)
-                        layoutManager.orientation = GridLayoutManager.VERTICAL
-                        recycler.layoutManager = layoutManager
-                        recycler.adapter = ProjectListAdapter(this@ProjectListActivity, response.body()!!)
+  private fun getProjectList() {
+    //SharedUtil.getToken(this@ProjectListActivity)
+    RetroInit.networkList.getProjects("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHgiOjMsImlkIjoiVGVzdEFjY291bnQiLCJuaWNrIjoiVEVTVCIsInJhbmsiOjMsImlhdCI6MTUwOTk4MjA1OX0.ca4huaT_iV9eWoLOlg5MmSjQRqxJExGCfR-IPsIB8ig").enqueue(object : Callback<getProjectObj> {
+      override fun onResponse(call: Call<getProjectObj>?, response: Response<getProjectObj>?) {
+        if (response!!.isSuccessful) {
+          ToastUtil.showToast(this@ProjectListActivity, "Success!")
+          response.body().run {
+            Log.d("list", this!!.status)
+            Log.d("list response", projects[0].title)
+            val layoutManager = GridLayoutManager(this@ProjectListActivity, 1)
+            layoutManager.orientation = GridLayoutManager.VERTICAL
+            recycler.layoutManager = layoutManager
+            recycler.adapter = ProjectListAdapter(this@ProjectListActivity, response.body()!!)
+          }
+        } else {
+          ToastUtil.showToast(this@ProjectListActivity, "Client Error!")
+        }
+      }
 
-                    }
-                } else {
-                    ToastUtil.showToast(this@ProjectListActivity, "Client Error!")
-                }
-            }
+      override fun onFailure(call: Call<getProjectObj>?, t: Throwable?) {
+        ToastUtil.showToast(this@ProjectListActivity, "서버와 연결에 실패했습니다")
+        t!!.printStackTrace()
+      }
 
-            override fun onFailure(call: Call<List<getProject>>?, t: Throwable?) {
-                ToastUtil.showToast(this@ProjectListActivity, "서버와 연결에 실패했습니다")
-            }
+    })
+  }
 
-        })
-    }
+  private fun setImage() {
+    GlideUtil.setGliding(this, R.drawable.logo_icon_only, logo)
+    GlideUtil.setGliding(this, R.drawable.project_create_icon, projectAddImg)
+    GlideUtil.setGliding(this, R.drawable.profile_img, profile)
+    GlideUtil.setGliding(this, R.drawable.search_icon, search)
+  }
 
-    private fun setImage() {
-        GlideUtil.setGliding(this, R.drawable.logo_icon_only, logo)
-        GlideUtil.setGliding(this, R.drawable.project_create_icon, projectAddImg)
-        GlideUtil.setGliding(this, R.drawable.profile_img, profile)
-        GlideUtil.setGliding(this, R.drawable.search_icon, search)
-    }
+  private fun setBtnAction() {
 
-    private fun setBtnAction() {
-
-    }
+  }
 }

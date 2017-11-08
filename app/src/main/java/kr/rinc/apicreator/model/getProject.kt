@@ -5,11 +5,11 @@ package kr.rinc.apicreator.model
  * This Project is APICreator
  */
 class getProject {
-    val status = ""
-    val idx = 0
-    val owner = 0
-    val url = ""
-    val title = ""
-    val description = ""
-    val invited = ""
+  val status = ""
+  val idx = 0
+  val owner = ""
+  val url = ""
+  val title = ""
+  val description = ""
+  val invited = ""
 }
