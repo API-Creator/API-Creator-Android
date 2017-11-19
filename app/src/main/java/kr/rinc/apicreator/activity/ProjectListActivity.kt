@@ -53,7 +53,7 @@ class ProjectListActivity : BaseActivity() {
           }
         } else {
           ToastUtil.showToast(this@ProjectListActivity, "Client Error!")
-        }k
+        }
       }
 
       override fun onFailure(call: Call<getProjectObj>?, t: Throwable?) {
