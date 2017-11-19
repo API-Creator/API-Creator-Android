@@ -9,18 +9,26 @@ import android.preference.PreferenceManager
  * This Project is APICreator
  */
 object SharedUtil {
-    val TOKEN = "token"
-    fun setToken(ctx: Context, token: String) {
-        val editor = getSharedPreferences(ctx).edit()
-        editor.putString(TOKEN, token)
-        editor.apply()
-    }
+  private val TOKEN = "token"
+  private val IDX = "idx"
 
-    fun getToken(ctx: Context): String {
-        return getSharedPreferences(ctx).getString(TOKEN, "")
-    }
+  fun getToken(ctx: Context): String = getSharedPreferences(ctx).getString(TOKEN, "")
 
-    private fun getSharedPreferences(ctx: Context): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(ctx)
-    }
+  fun setToken(ctx: Context, token: String) {
+    val editor = getSharedPreferences(ctx).edit()
+    editor.putString(TOKEN, token)
+    editor.apply()
+  }
+
+  fun getIdx(ctx: Context): String = getSharedPreferences(ctx).getString(IDX, "")
+
+  fun setIdx(ctx: Context, token: String) {
+    val editor = getSharedPreferences(ctx).edit()
+    editor.putString(IDX, token)
+    editor.apply()
+  }
+
+  private fun getSharedPreferences(ctx: Context): SharedPreferences {
+    return PreferenceManager.getDefaultSharedPreferences(ctx)
+  }
 }
