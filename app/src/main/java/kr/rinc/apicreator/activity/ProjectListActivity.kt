@@ -31,6 +31,9 @@ class ProjectListActivity : BaseActivity() {
     projectAddImg.setOnClickListener {
       getProjectList()
     }
+    search.setOnClickListener {
+      ToastUtil.showToast(this@ProjectListActivity,"asdf")
+    }
   }
 
   private fun getProjectList() {
@@ -39,6 +42,7 @@ class ProjectListActivity : BaseActivity() {
       override fun onResponse(call: Call<getProjectObj>?, response: Response<getProjectObj>?) {
         if (response!!.isSuccessful) {
           ToastUtil.showToast(this@ProjectListActivity, "Success!")
+          response.code()
           response.body().run {
             Log.d("list", this!!.status)
             Log.d("list response", projects[0].title)
@@ -49,7 +53,7 @@ class ProjectListActivity : BaseActivity() {
           }
         } else {
           ToastUtil.showToast(this@ProjectListActivity, "Client Error!")
-        }
+        }k
       }
 
       override fun onFailure(call: Call<getProjectObj>?, t: Throwable?) {
