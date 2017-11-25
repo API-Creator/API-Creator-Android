@@ -43,5 +43,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     implementation 'jp.wasabeef:glide-transformations:3.0.1'
 //    implementation 'geniusk.utilslib:ToastUtil:1.0.0@aar'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 }
 

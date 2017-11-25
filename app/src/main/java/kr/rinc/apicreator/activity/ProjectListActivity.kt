@@ -33,31 +33,35 @@ class ProjectListActivity : BaseActivity() {
   }
 
   private fun getProjectList() {
-    //SharedUtil.getToken(this@ProjectListActivity)
-    RetroInit.networkList.getProjects("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHgiOjMsImlkIjoiVGVzdEFjY291bnQiLCJuaWNrIjoiVEVTVCIsInJhbmsiOjMsImlhdCI6MTUwOTk4MjA1OX0.ca4huaT_iV9eWoLOlg5MmSjQRqxJExGCfR-IPsIB8ig").enqueue(object : Callback<getProjectObj> {
-      override fun onResponse(call: Call<getProjectObj>?, response: Response<getProjectObj>?) {
-        if (response!!.isSuccessful) {
-          ToastUtil.showToast(this@ProjectListActivity, "Success!")
-          response.code()
-          response.body().run {
-            Log.d("list", this!!.status)
-            Log.d("list response", projects[0].title)
-            val layoutManager = GridLayoutManager(this@ProjectListActivity, 1)
-            layoutManager.orientation = GridLayoutManager.VERTICAL
-            recycler.layoutManager = layoutManager
-            recycler.adapter = ProjectListAdapter(this@ProjectListActivity, response.body()!!)
+    RetroInit.networkList.getProjects("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHgiOjMsImlkIjoiVGVzdEFjY291bnQiLCJuaWNrIjoiVEVTVCIsInJhbmsiOjMsImlhdCI6MTUwOTk4MjA1OX0.ca4huaT_iV9eWoLOlg5MmSjQRqxJExGCfR-IPsIB8ig")
+        .enqueue(object : Callback<getProjectObj> {
+          override fun onResponse(call: Call<getProjectObj>?, response: Response<getProjectObj>?) {
+            if (response!!.isSuccessful) {
+              response.body().apply {
+                if(response.body()!!.status === "complate") {
+                  val layoutManager = GridLayoutManager(this@ProjectListActivity, 1)
+                  layoutManager.orientation = GridLayoutManager.VERTICAL
+                  recycler.layoutManager = layoutManager
+                  Log.d("projectList : ", response.body()!!.status)
+                  for (i in response.body()!!.projects) {
+                    Log.d("projectList : ", i.toString())
+                  }
+                  recycler.adapter = ProjectListAdapter(this@ProjectListActivity, response.body()!!)
+                }else {
+                  ToastUtil.showToast(this@ProjectListActivity, response.body()!!.status)
+                }
+              }
+            } else {
+              ToastUtil.showToast(this@ProjectListActivity, ToastMessageList.RetrofitClientError)
+            }
           }
-        } else {
-          ToastUtil.showToast(this@ProjectListActivity, "Client Error!")
-        }
-      }
 
-      override fun onFailure(call: Call<getProjectObj>?, t: Throwable?) {
-        ToastUtil.showToast(this@ProjectListActivity, "서버와 연결에 실패했습니다")
-        t!!.printStackTrace()
-      }
+          override fun onFailure(call: Call<getProjectObj>?, t: Throwable?) {
+            ToastUtil.showToast(this@ProjectListActivity, ToastMessageList.RetrofitServerError)
+            t!!.printStackTrace()
+          }
 
-    })
+        })
   }
 
   private fun setImage() {

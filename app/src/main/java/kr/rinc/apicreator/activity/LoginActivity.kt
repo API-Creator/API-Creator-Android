@@ -9,6 +9,7 @@ import kr.rinc.apicreator.model.Login
 import kr.rinc.apicreator.network.RincRetroInit
 import kr.rinc.apicreator.util.IntentUtil
 import kr.rinc.apicreator.util.SharedUtil
+import kr.rinc.apicreator.util.ToastMessageList
 import kr.rinc.apicreator.util.ToastUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,25 +54,21 @@ class LoginActivity : BaseActivity() {
           pwEdit.text.toString())
           .enqueue(object : Callback<Login> {
             override fun onFailure(call: Call<Login>?, t: Throwable?) {
-              ToastUtil.showToast(this@LoginActivity, "서버 오류")
+              ToastUtil.showToast(this@LoginActivity, ToastMessageList.RetrofitServerError)
             }
 
             override fun onResponse(call: Call<Login>?, response: Response<Login>?) {
               if (response!!.isSuccessful) {
-                response.body()!!.run {
+                response.body()!!.apply {
                   ToastUtil.showToast(this@LoginActivity, status.message)
                   if (status.success === "true") {
                     SharedUtil.setToken(this@LoginActivity, token)
                     IntentUtil.newAct(this@LoginActivity, ProjectListActivity::class.java)
                   }
-                  else {
-                    SharedUtil.setToken(this@LoginActivity, token)
-                    IntentUtil.newAct(this@LoginActivity, ProjectListActivity::class.java)
-                  }
                 }
               } else {
-                Log.d("respoinse", response.body()!!.toString())
-                ToastUtil.showToast(this@LoginActivity, "클라이언트 오류")
+                Log.d("response", response.body()!!.toString())
+                ToastUtil.showToast(this@LoginActivity, ToastMessageList.RetrofitClientError)
               }
             }
 

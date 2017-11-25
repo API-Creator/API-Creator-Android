@@ -53,6 +53,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/projectTitle"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="#fff"
@@ -89,6 +90,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/projectDomain"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="#fff"
@@ -125,6 +127,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/projectInvited"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="#fff"
@@ -161,6 +164,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/projectDescription"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="#fff"
@@ -179,6 +183,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <Button
+        android:id="@+id/projectAddBtn"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
