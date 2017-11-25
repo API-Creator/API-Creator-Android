@@ -3,16 +3,12 @@ package kr.rinc.apicreator.activity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_project_list.*
 import kr.rinc.apicreator.R
 import kr.rinc.apicreator.adapter.ProjectListAdapter
-import kr.rinc.apicreator.model.getProject
 import kr.rinc.apicreator.model.getProjectObj
 import kr.rinc.apicreator.network.RetroInit
-import kr.rinc.apicreator.util.GlideUtil
-import kr.rinc.apicreator.util.SharedUtil
-import kr.rinc.apicreator.util.ToastUtil
+import kr.rinc.apicreator.util.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,10 +25,10 @@ class ProjectListActivity : BaseActivity() {
     setBtnAction()
     getProjectList()
     projectAddImg.setOnClickListener {
-      getProjectList()
+      IntentUtil.moveAct(this, ProjectAddActivity::class.java)
     }
     search.setOnClickListener {
-      ToastUtil.showToast(this@ProjectListActivity,"asdf")
+      ToastUtil.showToast(this@ProjectListActivity, "asdf")
     }
   }
 

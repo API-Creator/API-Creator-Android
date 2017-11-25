@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">APICreator</string>
-    <string name="project">프로젝트 생성</string>
+    <string name="project_add_text">프로젝트 생성</string>
+    <string name="project_title_text">프로젝트 제목</string>
+    <string name="domain_text">도메인</string>
+    <string name="team_member_text">팀원</string>
+    <string name="desc_text">설명</string>
+    <string name="project_add_btn_text">프로젝트 게시</string>
 </resources>

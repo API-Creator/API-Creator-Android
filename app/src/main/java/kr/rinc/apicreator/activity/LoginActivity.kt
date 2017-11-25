@@ -7,7 +7,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kr.rinc.apicreator.R
 import kr.rinc.apicreator.model.Login
 import kr.rinc.apicreator.network.RincRetroInit
-import kr.rinc.apicreator.util.ActivityUtil
 import kr.rinc.apicreator.util.IntentUtil
 import kr.rinc.apicreator.util.SharedUtil
 import kr.rinc.apicreator.util.ToastUtil
@@ -20,7 +19,6 @@ class LoginActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    ActivityUtil.setStatusBarColor(window, "#F5F5F5")
     changeEditBackground()
     setBtnAction()
   }
