@@ -2,6 +2,7 @@ package kr.rinc.apicreator.network
 
 
 import android.annotation.SuppressLint
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,10 +18,13 @@ object RetroInit {
     val interceptor = HttpLoggingInterceptor()
     interceptor.level = HttpLoggingInterceptor.Level.BODY
     val client = OkHttpClient.Builder().addNetworkInterceptor(interceptor).build()
+    val gson = GsonBuilder()
+        .setLenient()
+        .create()
     val retrofit = Retrofit.Builder()
         .baseUrl(SERVER_URL)
         .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     networkList = retrofit.create(NetworkList::class.java)
   }

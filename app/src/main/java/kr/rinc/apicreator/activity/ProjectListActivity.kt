@@ -38,16 +38,15 @@ class ProjectListActivity : BaseActivity() {
           override fun onResponse(call: Call<getProjectObj>?, response: Response<getProjectObj>?) {
             if (response!!.isSuccessful) {
               response.body().apply {
-                if(response.body()!!.status === "complate") {
+                if (response.body()!!.status == "complate") {
                   val layoutManager = GridLayoutManager(this@ProjectListActivity, 1)
                   layoutManager.orientation = GridLayoutManager.VERTICAL
                   recycler.layoutManager = layoutManager
-                  Log.d("projectList : ", response.body()!!.status)
                   for (i in response.body()!!.projects) {
                     Log.d("projectList : ", i.toString())
                   }
                   recycler.adapter = ProjectListAdapter(this@ProjectListActivity, response.body()!!)
-                }else {
+                } else {
                   ToastUtil.showToast(this@ProjectListActivity, response.body()!!.status)
                 }
               }

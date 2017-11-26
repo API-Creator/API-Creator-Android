@@ -5,11 +5,10 @@ package kr.rinc.apicreator.model
  * This Project is APICreator
  */
 class getProject {
-  val status = ""
-  val idx = 0
+  val idx = ""
   val owner = ""
   val url = ""
   val title = ""
   val description = ""
-  val invited = ""
+  lateinit var joinus: List<String>
 }

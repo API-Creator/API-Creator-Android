@@ -3,6 +3,7 @@ package kr.rinc.apicreator.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,8 +36,9 @@ class ProjectListAdapter(private val context: Context, private val gson: getProj
     val itemView = gridViewHolder.itemView
     itemView.projectTitle.text = item.title
     itemView.projectPM.text = "PM By " + item.owner
+    Log.d("list: ", item.title)
     //Admin Check
-    if (item.idx.toString() === SharedUtil.getIdx(context)) {
+    if (item.idx === SharedUtil.getIdx(context)) {
       GlideUtil.setGliding(context, R.drawable.edit_btn_w, itemView.projectEditImg)
       GlideUtil.setGliding(context, R.drawable.delete_btn_w, itemView.projectDeleteImg)
       itemView.projectAdminView.visibility = View.VISIBLE
